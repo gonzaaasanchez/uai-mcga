@@ -1,9 +1,11 @@
 var express = require("express");
+const fs = require("fs");
 
 var products = require("./data/products.json");
 var clients = require("./data/clients.json");
 
 var app = express();
+app.use(express.json());
 var port = 3000;
 
 // general
@@ -15,6 +17,24 @@ app.get("/", function (req, res) {
 app.listen(port, function () {
   console.log("Example app listening on port " + port);
 });
+
+// write
+
+function writeData(type, data, callback) {
+  console.log(data);
+  fs.writeFile(
+    type + ".json",
+    JSON.stringify(data, null, 2),
+    "utf8",
+    (error) => {
+      if (error) {
+        callback(error);
+        return;
+      }
+      callback(null);
+    }
+  );
+}
 
 // products
 
@@ -28,6 +48,24 @@ app.get("/products/:id", function (req, res) {
   });
   if (product) res.json(product);
   else res.sendStatus(404);
+});
+
+app.post("/products", (req, res) => {
+  const newProduct = {
+    id: req.body.id,
+    prod: req.body.prod,
+    price: req.body.price,
+  };
+
+  products.list.push(newProduct);
+
+  writeData("products", newProduct, (writeError) => {
+    if (writeError) {
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    res.json(newProduct);
+  });
 });
 
 // clients
