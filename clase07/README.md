@@ -39,4 +39,8 @@ curl -X PUT -H "Content-Type: application/json" -d '{"first_name":"Pepito","last
 
 curl -X DELETE -H "Content-Type: application/json" http://localhost:3000/clients/31
 
+Sales
 
+curl -X GET -H "Content-Type: application/json"  http://localhost:3000/sales
+
+curl -X GET -H "Content-Type: application/json"  http://localhost:3000/sales/1

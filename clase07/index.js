@@ -3,6 +3,7 @@ const fs = require('fs');
 
 var products = require('./data/products.json');
 var clients = require('./data/clients.json');
+var sales = require('./data/sales.json');
 
 var app = express();
 app.use(express.json());
@@ -174,4 +175,18 @@ app.delete('/clients/:id', (req, res) => {
 
     res.status(204).send();
   }
+});
+
+// sales
+
+app.get('/sales', function (_, res) {
+  res.json(sales.list);
+});
+
+app.get('/sales/:id', function (req, res) {
+  var sale = sales.list.find(function (sale) {
+    return parseInt(sale.id) === parseInt(req.params.id);
+  });
+  if (sale) res.json(sale);
+  else res.sendStatus(404);
 });
