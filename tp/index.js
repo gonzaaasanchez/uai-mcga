@@ -1,26 +1,24 @@
-// import * as mongoose from "mongoose";
-var express = require('express');
-var mongoose = require('mongoose');
-const port = 3000 || 8000;
-const MONGODB_URL =
-  'mongodb+srv://gonzalosanchez:hola123123@cluster0.zrttfst.mongodb.net/example?retryWrites=true&w=majority' ||
-  '';
+import app from '../tp/app.js';
+import * as mongoose from 'mongoose';
 
-var app = express();
-app.use(express.json());
+const port = 3000 || 8080;
+
+const MONGODB_URL =
+  'mongodb+srv://gonzalosanchez:hola123123@cluster0.zrttfst.mongodb.net/mcga-tp?retryWrites=true&w=majority' ||
+  '';
 
 mongoose
   .connect(MONGODB_URL)
   .then(() => {
     console.log({
       level: 'info',
-      message: 'Database connected',
-      label: 'mongodb',
+      message: '✅ Database connected',
+      label: 'mongo',
     });
     app.listen(port, () => {
       console.log({
         level: 'info',
-        message: 'server listening on port: ' + port,
+        message: `Server listening on port ${port}`,
         label: 'server',
       });
     });
@@ -28,7 +26,8 @@ mongoose
   .catch((error) =>
     console.log({
       level: 'error',
-      message: error,
-      label: 'mongodb',
+      message: '🔴 Database error: ',
+      errorData: error,
+      label: 'mongo',
     })
   );
