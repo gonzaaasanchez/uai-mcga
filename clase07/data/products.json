@@ -499,6 +499,11 @@
       "id": 100,
       "prod": "Heavy Duty Dust Pan",
       "price": 171.97
+    },
+    {
+      "prod": "New Product Edited",
+      "price": 25,
+      "id": 101
     }
   ]
 }

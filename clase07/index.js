@@ -46,6 +46,30 @@ app.post('/products', (req, res) => {
   res.status(201).json(newProduct);
 });
 
+app.put('/products/:id', (req, res) => {
+  const productId = parseInt(req.params.id);
+  const updatedProduct = req.body;
+  const index = products.list.findIndex(function (item) {
+    if (item.id === productId) {
+      return true;
+    }
+  });
+
+  if (index === -1) {
+    res.status(404).json({ error: 'Product not found' });
+  } else {
+    products.list[index] = { ...products.list[index], ...updatedProduct };
+
+    fs.writeFileSync(
+      './data/products.json',
+      JSON.stringify(products, null, 2),
+      'utf-8'
+    );
+
+    res.json(products.list[index]);
+  }
+});
+
 // clients
 
 app.get('/clients', function (_, res) {
