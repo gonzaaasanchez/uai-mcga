@@ -16,6 +16,6 @@ productsRouter.get('/:id', productsController.getById);
 productsRouter.delete('/:id', productsController.delete);
 
 //PUT - http://localhost/products/:id
-// productsRouter.put('/:id', productsController.update);
+productsRouter.put('/:id', productsController.update);
 
 export default productsRouter;
