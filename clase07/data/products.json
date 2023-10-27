@@ -48,7 +48,7 @@
     {
       "id": 10,
       "prod": "Quail - Whole, Boneless",
-      "price": 333.0
+      "price": 333
     },
     {
       "id": 11,
@@ -499,6 +499,11 @@
       "id": 100,
       "prod": "Heavy Duty Dust Pan",
       "price": 171.97
+    },
+    {
+      "prod": "New Product Edited",
+      "price": 25,
+      "id": 101
     }
   ]
 }
