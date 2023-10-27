@@ -73,3 +73,27 @@ app.post('/clients', (req, res) => {
 
   res.status(201).json(newClient);
 });
+
+app.put('/clients/:id', (req, res) => {
+  const clientId = parseInt(req.params.id);
+  const updatedClient = req.body;
+  const index = clients.list.findIndex(function (item) {
+    if (item.id === clientId) {
+      return true;
+    }
+  });
+
+  if (index === -1) {
+    res.status(404).json({ error: 'Client not found' });
+  } else {
+    clients.list[index] = { ...clients.list[index], ...updatedClient };
+
+    fs.writeFileSync(
+      './data/clients.json',
+      JSON.stringify(clients, null, 2),
+      'utf-8'
+    );
+
+    res.json(clients.list[index]);
+  }
+});
