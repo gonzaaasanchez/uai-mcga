@@ -33,21 +33,17 @@ app.get('/products/:id', function (req, res) {
 });
 
 app.post('/products', (req, res) => {
-  const newProduct = {
-    id: req.body.id,
-    prod: req.body.prod,
-    price: req.body.price,
-  };
-
+  const newProduct = req.body;
+  newProduct.id = products.list[products.list.length - 1].id + 1;
   products.list.push(newProduct);
 
-  writeData('products', newProduct, (writeError) => {
-    if (writeError) {
-      res.status(500).send('Internal Server Error');
-      return;
-    }
-    res.json(newProduct);
-  });
+  fs.writeFileSync(
+    './data/products.json',
+    JSON.stringify(products, null, 2),
+    'utf-8'
+  );
+
+  res.status(201).json(newProduct);
 });
 
 // clients
