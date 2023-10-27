@@ -121,3 +121,30 @@ app.put('/clients/:id', (req, res) => {
     res.json(clients.list[index]);
   }
 });
+
+app.delete('/clients/:id', (req, res) => {
+  const clientId = parseInt(req.params.id);
+  const client = clients.list.find(function (item) {
+    if (item.id === clientId) {
+      return true;
+    }
+  });
+
+  if (!client) {
+    res.sendStatus(404);
+  } else {
+    clients.list = clients.list.filter(function (item) {
+      if (item.id !== clientId) {
+        return true;
+      }
+    });
+
+    fs.writeFileSync(
+      './data/clients.json',
+      JSON.stringify(clients, null, 2),
+      'utf-8'
+    );
+
+    res.status(204).send();
+  }
+});

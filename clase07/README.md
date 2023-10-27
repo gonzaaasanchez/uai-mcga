@@ -35,4 +35,6 @@ curl -X POST -H "Content-Type: application/json" -d '{"first_name":"Pepito","las
 
 curl -X PUT -H "Content-Type: application/json" -d '{"first_name":"Pepito","last_name":"Apellido","email":"pepito@mail.com"}' http://localhost:3000/clients/31
 
+curl -X DELETE -H "Content-Type: application/json" http://localhost:3000/clients/31
+
 
