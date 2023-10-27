@@ -18,24 +18,6 @@ app.listen(port, function () {
   console.log('Example app listening on port ' + port);
 });
 
-// write
-
-function writeData(type, data, callback) {
-  console.log(data);
-  fs.writeFileSync(
-    './data/' + type + '.json',
-    JSON.stringify(data, null, 2),
-    'utf8',
-    (error) => {
-      if (error) {
-        callback(error);
-        return;
-      }
-      callback(null);
-    }
-  );
-}
-
 // products
 
 app.get('/products', function (req, res) {
@@ -87,11 +69,11 @@ app.post('/clients', (req, res) => {
   newClient.id = clients.list[clients.list.length - 1].id + 1;
   clients.list.push(newClient);
 
-  writeData('clients', clients, (writeError) => {
-    if (writeError) {
-      res.status(500).send('Internal Server Error');
-      return;
-    }
-    res.status(201).json(newClient);
-  });
+  fs.writeFileSync(
+    './data/clients.json',
+    JSON.stringify(clients, null, 2),
+    'utf-8'
+  );
+
+  res.status(201).json(newClient);
 });
