@@ -13,7 +13,7 @@ productsRouter.post('/', productsController.create);
 productsRouter.get('/:id', productsController.getById);
 
 //DELETE - http://localhost/products/:id
-// productsRouter.delete('/:id', productsController.delete);
+productsRouter.delete('/:id', productsController.delete);
 
 //PUT - http://localhost/products/:id
 // productsRouter.put('/:id', productsController.update);

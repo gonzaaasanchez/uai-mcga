@@ -29,15 +29,37 @@ const productsController = {
     }
   },
 
-  create: async (req, res) => {
+  create: async (_req, res) => {
     try {
-      const newProduct = new ProductModel({ ...req.body });
+      const newProduct = new ProductModel({ ..._req.body });
 
       const product = await newProduct.save();
 
       if (product) {
         return res.status(201).json({
           message: 'Product successfully created',
+          data: product,
+          error: false,
+        });
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({
+          message: error.message,
+          error: true,
+        });
+      }
+    }
+  },
+
+  delete: async (_req, res) => {
+    try {
+      const product = await ProductModel.findById(_req.params.id);
+      const result = await product.deleteOne();
+
+      if (result) {
+        return res.status(201).json({
+          message: 'Product successfully deleted',
           data: product,
           error: false,
         });
