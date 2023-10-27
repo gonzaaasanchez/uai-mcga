@@ -11,11 +11,10 @@ const productsController = {
   },
 
   getById: async (_req, res) => {
-    const allProducts = await ProductModel.find({});
+    const product = await ProductModel.findById(_req.params.id);
     return res.status(200).json({
       status: 200,
-      total: allProducts.length,
-      data: allProducts,
+      data: product,
     });
   },
 
