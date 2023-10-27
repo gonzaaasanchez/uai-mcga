@@ -11,11 +11,22 @@ const productsController = {
   },
 
   getById: async (_req, res) => {
-    const product = await ProductModel.findById(_req.params.id);
-    return res.status(200).json({
-      status: 200,
-      data: product,
-    });
+    try {
+      const product = await ProductModel.findById(_req.params.id);
+      if (product) {
+        return res.status(200).json({
+          status: 200,
+          data: product,
+        });
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({
+          message: error.message,
+          error: true,
+        });
+      }
+    }
   },
 
   create: async (req, res) => {
