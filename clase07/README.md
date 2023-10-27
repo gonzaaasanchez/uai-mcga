@@ -25,6 +25,8 @@ curl -X POST -H "Content-Type: application/json" -d '{"prod": "New Product", "pr
 
 curl -X PUT -H "Content-Type: application/json" -d '{"prod": "New Product Edited", "price": 25}' http://localhost:3000/products/101
 
+curl -X DELETE -H "Content-Type: application/json" http://localhost:3000/products/101
+
 Clients
 
 curl -X GET -H "Content-Type: application/json"  http://localhost:3000/clients

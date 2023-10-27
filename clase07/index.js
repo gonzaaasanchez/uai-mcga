@@ -70,6 +70,33 @@ app.put('/products/:id', (req, res) => {
   }
 });
 
+app.delete('/products/:id', (req, res) => {
+  const productId = parseInt(req.params.id);
+  const product = products.list.find(function (item) {
+    if (item.id === productId) {
+      return true;
+    }
+  });
+
+  if (!product) {
+    res.sendStatus(404);
+  } else {
+    products.list = products.list.filter(function (item) {
+      if (item.id !== productId) {
+        return true;
+      }
+    });
+
+    fs.writeFileSync(
+      './data/products.json',
+      JSON.stringify(products, null, 2),
+      'utf-8'
+    );
+
+    res.status(204).send();
+  }
+});
+
 // clients
 
 app.get('/clients', function (_, res) {
