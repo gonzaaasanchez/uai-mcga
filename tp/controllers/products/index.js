@@ -84,11 +84,8 @@ const productsController = {
 
   delete: async (_req, res) => {
     try {
-      const product = await ProductModel.findById(_req.params.id);
-      console.warn('Warning: product.deleteOne() is correct?');
-      const result = await product.deleteOne();
-
-      if (result) {
+      const product = await ProductModel.findByIdAndDelete(_req.params.id);
+      if (product) {
         return res.status(201).json({
           message: 'Product successfully deleted',
           data: product,
