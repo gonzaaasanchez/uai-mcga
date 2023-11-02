@@ -32,7 +32,6 @@ const productsController = {
   create: async (_req, res) => {
     try {
       const newProduct = new ProductModel({ ..._req.body });
-
       const product = await newProduct.save();
 
       if (product) {
@@ -54,13 +53,18 @@ const productsController = {
 
   update: async (_req, res) => {
     try {
-      var product = await ProductModel.findById(_req.params.id);
-      product.name = _req.body.name;
-      product.price = _req.body.price;
-      console.warn('Warning: product.updateOne() not working');
-      const result = await product.updateOne();
+      const productId = _req.params.id;
+      const updateData = {
+        name: _req.body.name,
+        price: _req.body.price,
+      };
 
-      if (result) {
+      const product = await ProductModel.findOneAndUpdate(
+        { _id: productId },
+        updateData,
+        { new: true }
+      );
+      if (product) {
         return res.status(201).json({
           message: 'Product successfully updated',
           data: product,
@@ -68,6 +72,7 @@ const productsController = {
         });
       }
     } catch (error) {
+      console.log(error);
       if (error instanceof Error) {
         return res.status(400).json({
           message: error.message,
