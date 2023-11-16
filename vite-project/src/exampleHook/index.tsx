@@ -4,7 +4,7 @@ import { User } from "./types"
 const ExampleHook = () => {
     const [value, setValue] = useState(0)
     const [name, setName] = useState('Gonzalo')
-    // const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true)
     const [usersList, setUsersList] = useState([])
 
     
@@ -51,13 +51,11 @@ const ExampleHook = () => {
             <button onClick={descontarHandler}>Descontar</button>
             <h2>El nombre es: {name}</h2>
             <button onClick={() => setName('Pepe')}>Cambiar nombre</button>
-            {/* {isLoading && <h1>Cargando...</h1>}
-            {!isLoading && <h1>Ya cargó</h1>} */}
+            <button onClick={() => setIsLoading(false)}>Mostrar usuarios</button>
             {
-                usersList.map((user: User) => (
-                    <div key={user.id}>
+                isLoading ? <h3>Cargando...</h3> :
+                    usersList.map((user: User) => (
                         <li>{user.name} <a href="mailto:{user.email}">{user.email}</a> </li>
-                    </div>
                 ))
             }
         </>
