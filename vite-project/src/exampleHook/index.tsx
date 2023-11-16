@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const ExampleHook = () => {
     const [value, setValue] = useState(0)
@@ -14,6 +14,24 @@ const ExampleHook = () => {
             setValue(value - 1)
         }
     }
+
+    // es como el ComponentDidMount
+    // siempre se ejecuta cuando el array de dependencias está vacío (el segundo parámetro) -> []
+    useEffect(() => {
+        console.log('Se montó el componente')
+    }, [])
+
+    // es como el ComponentDidUpdate
+    // se ejecuta solamente cuando value cambie (primer parámetro) -> [value]
+    useEffect(() => {
+        console.log('Se actualizó el componente')
+    }, [value])
+
+    // es como el ComponentWillUnmount
+    // no tiene dependencias
+    useEffect(() => {
+        console.log('Se desmontó el componente')
+    }, [])
 
     return (
         <>
