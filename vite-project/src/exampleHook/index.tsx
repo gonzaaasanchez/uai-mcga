@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react"
+import { User } from "./types"
 
 const ExampleHook = () => {
     const [value, setValue] = useState(0)
     const [name, setName] = useState('Gonzalo')
     // const [isLoading, setIsLoading] = useState(true)
+    const [usersList, setUsersList] = useState([])
+
     
     const incrementHandler = () => {
         setValue(value + 1)
@@ -33,6 +36,13 @@ const ExampleHook = () => {
         console.log('Se desmontó el componente')
     }, [])
 
+    useEffect(() => {
+        const URL_API = 'https://jsonplaceholder.typicode.com/users'
+        fetch(URL_API)
+            .then(response => response.json())
+            .then(data => setUsersList(data))
+    }, [])
+
     return (
         <>
             <h1>ExampleHook</h1>
@@ -43,6 +53,13 @@ const ExampleHook = () => {
             <button onClick={() => setName('Pepe')}>Cambiar nombre</button>
             {/* {isLoading && <h1>Cargando...</h1>}
             {!isLoading && <h1>Ya cargó</h1>} */}
+            {
+                usersList.map((user: User) => (
+                    <div key={user.id}>
+                        <li>{user.name} <a href="mailto:{user.email}">{user.email}</a> </li>
+                    </div>
+                ))
+            }
         </>
     )
 }
